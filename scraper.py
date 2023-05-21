@@ -35,25 +35,17 @@ def get_sprites(page_urls):
         http = requests.get(url)
         soup = BeautifulSoup(http.text, 'html.parser')
         header2 = soup.find_all('h2')
-        #This loop is currently overscraping.
-        #There are multiple h2 elements on each page.
-        # So when the first If statement returns False,
-        # the second/third elif statement scrapes content anyway.
         for h2 in header2:
+            print(h2.text)
             if h2.text == 'Sprites':
                 figure = h2.find_next('figure')
                 sprite = figure.img
-                break
-            elif (soup.find('img', class_='pi-image-thumbnail')):
-                sprite = soup.find('img', class_='pi-image-thumbnail')
-                break
-            elif (soup.find('table', class_='infobox')):
-                table = soup.find('table', class_='infobox')
-                sprite = table.img
+            else:
+                continue
 
-        sprite_src = sprite.get('src')
-        sprite_url.add(sprite_src)
-        print(f'Sprite URL: {sprite_src}')
+            sprite_src = sprite.get('src')
+            sprite_url.add(sprite_src)
+            print(f'Sprite URL: {sprite_src}')
 
 character_index_url = 'https://cavestory.fandom.com/wiki/Category:Characters'
 enemy_index_url = 'https://cavestory.fandom.com/wiki/Category:Enemies'
