@@ -35,6 +35,7 @@ def get_sprites(page_urls):
         http = requests.get(url)
         soup = BeautifulSoup(http.text, 'html.parser')
         header2 = soup.find_all('h2')
+        infobox = soup.find('table', class_='infobox')
         for h2 in header2:
             print(h2.text)
             if h2.text == 'Sprites':
@@ -43,9 +44,17 @@ def get_sprites(page_urls):
             else:
                 continue
 
+        if infobox:
+            for th in infobox.find_all('th'):
+                if th.text == 'Sprites':
+                    sprite = th.img
+        try:
+            # I think the problem is right here.
             sprite_src = sprite.get('src')
             sprite_url.add(sprite_src)
             print(f'Sprite URL: {sprite_src}')
+        except UnboundLocalError:
+            continue
 
 character_index_url = 'https://cavestory.fandom.com/wiki/Category:Characters'
 enemy_index_url = 'https://cavestory.fandom.com/wiki/Category:Enemies'
