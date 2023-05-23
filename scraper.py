@@ -74,7 +74,7 @@ def get_sprites(page_urls):
             with open(f'{p}/scraped/cavestory/emojis/cavestory_{name}.png', 'wb') as wb:
                 wb.write(get_sprites.content)
 
-            pack['files'].update({f'{name}':f'{name}.png'})
+            pack['files'].update({f'cavestory_{name}':f'cavestory_{name}.png'})
 
 
 
